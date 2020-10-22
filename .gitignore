@@ -2,7 +2,6 @@
 .scannerwork/
 .vscode
 *.iml
-out/
 *.ipr
 *.iws
 *.gpg
