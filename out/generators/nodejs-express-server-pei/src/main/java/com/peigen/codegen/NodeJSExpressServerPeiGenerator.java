@@ -86,25 +86,26 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
     // no model file
     modelTemplateFiles.clear();
 
-    apiTemplateFiles.put("controller.mustache", ".js");
-    apiTemplateFiles.put("service.mustache", ".js");
+    apiTemplateFiles.put("controller_module.mustache", ".mjs");
+    apiTemplateFiles.put("service_module.mustache", ".mjs");
+    apiTemplateFiles.put("handlers_module.mustache", ".js");
 
-    supportingFiles.add(new SupportingFile("openapi.mustache", "api", "openapi.yaml"));
-    supportingFiles.add(new SupportingFile("config.mustache", "config", "index.js"));
-    supportingFiles.add(new SupportingFile("expressServer.mustache", "", "expressServer.js"));
-    supportingFiles.add(new SupportingFile("index.mustache", "", "index.js"));
-    supportingFiles.add(new SupportingFile("logger.mustache", "", "logger.js"));
+    supportingFiles.add(new SupportingFile("openapi_module.mustache", "api", "openapi.yaml"));
+    supportingFiles.add(new SupportingFile("config_module.mustache", "", "config.mjs"));
+    supportingFiles.add(new SupportingFile("expressServer_module.mustache", "", "expressServer.mjs"));
+    supportingFiles.add(new SupportingFile("index_module.mustache", "", "index.mjs"));
+    supportingFiles.add(new SupportingFile("logger_module.mustache", "", "logger.mjs"));
     supportingFiles.add(new SupportingFile("eslintrc.mustache", "", ".eslintrc.json"));
 
     // utils folder
-    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "utils", "openapiRouter.js"));
+    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "utils", "openapiRouter.mjs"));
 
     // controllers folder
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index.mustache", "controllers", "index.js"));
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller.mustache", "controllers", "Controller.js"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index_module.mustache", "controllers", "index.mjs"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller_module.mustache", "controllers", "Controller.mjs"));
     // service folder
-    supportingFiles.add(new SupportingFile("services" + File.separator + "index.mustache", "services", "index.js"));
-    supportingFiles.add(new SupportingFile("services" + File.separator + "Service.mustache", "services", "Service.js"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "index_module.mustache", "services", "index.mjs"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "services", "Service.mjs"));
 
     // do not overwrite if the file is already present
     writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
@@ -172,15 +173,24 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
     LOGGER.info("apiFilename templateName is {} and tag is {} ", templateName, tag);
     LOGGER.info("apiFilename result: {}", result);
 
-    if (templateName.equals("service.mustache")) {
+    if (templateName.equals("service.mustache") | templateName.equals("service_module.mustache")) {
       String stringToMatch = File.separator + "controllers" + File.separator;
       String replacement = File.separator + implFolder + File.separator;
       result = result.replace(stringToMatch, replacement);
 
-      stringToMatch = "Controller.js";
-      replacement = "Service.js";
+      stringToMatch = "Controller.";
+      replacement = "Service.";
       result = result.replace(stringToMatch, replacement);
       LOGGER.info("apiFilename for service result: {} ", result);
+    } else if (templateName.equals("handlers.mustache") | templateName.equals("handlers_module.mustache")) {
+      //String stringToMatch = File.separator + "controllers" + File.separator;
+      //String replacement = File.separator + implFolder + File.separator;
+      //result = result.replace(stringToMatch, replacement);
+
+      String stringToMatch = "Controller.";
+      String replacement = "Handlers.";
+      result = result.replace(stringToMatch, replacement);
+      LOGGER.info("apiFilename for handlers result: {} ", result);
     }
     return result;
   }

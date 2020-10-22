@@ -1,0 +1,25 @@
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+{{#-first}}
+import {{classname}}Controller from './{{classname}}Controller.mjs'
+{{/-first}}
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+
+module.exports = {
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+  {{#-first}}
+export default {{classname}}Controller
+  {{/-first}}
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
+}

@@ -1,0 +1,16 @@
+import config from './config.mjs'
+import logger from './logger.mjs'
+import ExpressServer from './expressServer.mjs'
+
+const launchServer = async () => {
+  let expressServer = null
+  try {
+    expressServer = new ExpressServer(config.URL_PORT, config.OPENAPI_YAML)
+    expressServer.launch()
+    logger.info('Express server running')
+  } catch (error) {
+    logger.error('Express Server failure', error.message)
+  }
+}
+
+launchServer().catch(e => logger.error(e))

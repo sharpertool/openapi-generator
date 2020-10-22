@@ -1,0 +1,43 @@
+/* eslint-disable no-unused-vars */
+import Service from './Service.mjs')
+
+{{#operations}}
+{{#operation}}
+/**
+{{#summary}}
+* {{{summary}}}
+{{/summary}}
+{{#notes}}
+* {{{notes}}}
+{{/notes}}
+*
+{{#allParams}}
+* {{paramName}} {{{dataType}}} {{{description}}}{{^required}} (optional){{/required}}
+{{/allParams}}
+{{^returnType}}
+* no response value expected for this operation
+{{/returnType}}
+{{#returnType}}
+* returns {{{returnType}}}
+{{/returnType}}
+* */
+export const {{{operationId}}} = ({{#allParams}}{{#-first}}{ {{/-first}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{#-last}} }{{/-last}}{{/allParams}}) => new Promise(
+  /* Should this be async??? */
+  async (resolve, reject) => {
+    try {
+      resolve(Service.successResponse({
+    {{#allParams}}
+        {{paramName}},
+    {{/allParams}}
+      }))
+    } catch (e) {
+      reject(Service.rejectResponse(
+        e.message || 'Invalid input',
+        e.status || 405,
+      ))
+    }
+  },
+)
+{{/operation}}
+{{/operations}}
+

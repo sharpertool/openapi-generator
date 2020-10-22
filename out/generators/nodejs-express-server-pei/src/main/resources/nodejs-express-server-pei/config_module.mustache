@@ -1,0 +1,19 @@
+import {fileURLToPath} from 'url'
+import {dirname, join, resolve} from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const config = {
+  ROOT_DIR: __dirname,
+  URL_PORT: 3000,
+  URL_PATH: 'http://localhost',
+  BASE_VERSION: 'v2',
+  CONTROLLER_DIRECTORY: join(__dirname, 'controllers'),
+  PROJECT_DIR: __dirname,
+}
+config.OPENAPI_YAML = join(config.ROOT_DIR, 'api', 'openapi.yaml')
+config.FULL_PATH = `${config.URL_PATH}:${config.URL_PORT}/${config.BASE_VERSION}`
+config.FILE_UPLOAD_PATH = join(config.PROJECT_DIR, 'uploaded_files')
+
+export default config
