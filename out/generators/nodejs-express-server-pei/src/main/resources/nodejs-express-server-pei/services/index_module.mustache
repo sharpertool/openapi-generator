@@ -3,14 +3,13 @@
 {{#operations}}
 {{#operation}}
 {{#-first}}
-import {{classname}}Service from './{{classname}}Service.mjs'
+import * as {{classname}}Service from './{{classname}}Service.mjs'
 {{/-first}}
 {{/operation}}
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
 
-module.exports = {
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
@@ -22,4 +21,3 @@ export default {{classname}}Service
 {{/operations}}
 {{/apis}}
 {{/apiInfo}}
-}

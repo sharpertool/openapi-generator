@@ -2,6 +2,11 @@ import config from './config.mjs'
 import logger from './logger.mjs'
 import ExpressServer from './expressServer.mjs'
 
+// Import these for debug purposes.
+// Importing them here tests the import chain
+import controllers from './controllers/index.mjs'
+import services from './services/index.mjs'
+
 const launchServer = async () => {
   let expressServer = null
   try {

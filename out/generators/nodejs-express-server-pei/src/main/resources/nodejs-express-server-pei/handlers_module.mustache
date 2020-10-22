@@ -6,20 +6,22 @@
  * parameters are extracted and sent to the service, and where response is handled.
  */
 
-let Handler = {}
-// Must dynamically import the remote stuffs
-(async () => {
-    let handler = import('./DefaultControllers.mjs')
-    Handler = handler
-})()
+let handlers = null
 
-//const Controller = require('./Controller')
-//const service = require('../services/{{{classname}}}Service')
+const execHandler = async (request, response, method) => {
+  if (! handlers) {
+      console.log('Handlers not loaded yet. Loading')
+      handler = await import('./DefaultController.mjs')
+  } else {
+    console.log('Handlers already loaded...')
+  }
+  await handlers[method](request, response)
+}
+
 {{#operations}}
 {{#operation}}
 const {{operationId}} = async (request, response) => {
-  await Handler.{{operationId}}(request, response)
-  //await Controller.handleRequest(request, response, service.{{operationId}})
+  execHandler(request, response, "{{operationId}}")
 }
 
 {{/operation}}
