@@ -90,22 +90,22 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
     apiTemplateFiles.put("service_module.mustache", ".mjs");
     apiTemplateFiles.put("handlers_module.mustache", ".js");
 
-    supportingFiles.add(new SupportingFile("openapi_module.mustache", "api", "openapi.yaml"));
-    supportingFiles.add(new SupportingFile("config_module.mustache", "", "config.mjs"));
-    supportingFiles.add(new SupportingFile("expressServer_module.mustache", "", "expressServer.mjs"));
-    supportingFiles.add(new SupportingFile("index_module.mustache", "", "index.mjs"));
-    supportingFiles.add(new SupportingFile("logger_module.mustache", "", "logger.mjs"));
+    supportingFiles.add(new SupportingFile("openapi_module.mustache", "src/api", "openapi.yaml"));
+    supportingFiles.add(new SupportingFile("config_module.mustache", "src", "config.mjs"));
+    supportingFiles.add(new SupportingFile("expressServer_module.mustache", "src", "expressServer.mjs"));
+    supportingFiles.add(new SupportingFile("index_module.mustache", "src", "index.mjs"));
+    supportingFiles.add(new SupportingFile("logger_module.mustache", "src", "logger.mjs"));
     supportingFiles.add(new SupportingFile("eslintrc.mustache", "", ".eslintrc.json"));
 
     // utils folder
-    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "utils", "openapiRouter.mjs"));
+    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "src/utils", "openapiRouter.mjs"));
 
     // controllers folder
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index_module.mustache", "controllers", "index.mjs"));
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller_module.mustache", "controllers", "Controller.mjs"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index_module.mustache", "src/controllers", "index.mjs"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller_module.mustache", "src/controllers", "Controller.mjs"));
     // service folder
-    supportingFiles.add(new SupportingFile("services" + File.separator + "index_module.mustache", "services", "index.mjs"));
-    supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "services", "Service.mjs"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "index_module.mustache", "src/services", "index.mjs"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "src/services", "Service.mjs"));
 
     // do not overwrite if the file is already present
     writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
@@ -117,7 +117,7 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
 
   @Override
   public String apiPackage() {
-    return "controllers";
+    return "src/controllers";
   }
 
   /**

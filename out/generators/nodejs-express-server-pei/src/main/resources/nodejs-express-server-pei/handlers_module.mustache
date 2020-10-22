@@ -11,7 +11,7 @@ let handlers = null
 const execHandler = async (request, response, method) => {
   if (! handlers) {
       console.log('Handlers not loaded yet. Loading')
-      handler = await import('./DefaultController.mjs')
+      handlers = await import('./DefaultController.mjs')
   } else {
     console.log('Handlers already loaded...')
   }
