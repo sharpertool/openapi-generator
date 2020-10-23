@@ -43,8 +43,8 @@ export const {{{operationId}}} = ({{#allParams}}{{#-first}}{ {{/-first}}{{paramN
             {{paramName}},
         {{/allParams}}
       }
-      let payload = await execServiceImplementation(params, "{{operationId}}")
-      resolve(Service.successResponse(payload))
+      let response = await execServiceImplementation(params, "{{operationId}}")
+      resolve(Service.successResponse(response.payload, response.code))
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
