@@ -16,4 +16,8 @@ config.OPENAPI_YAML = join(config.ROOT_DIR, 'api', 'openapi.yaml')
 config.FULL_PATH = `${config.URL_PATH}:${config.URL_PORT}/${config.BASE_VERSION}`
 config.FILE_UPLOAD_PATH = join(config.PROJECT_DIR, 'uploaded_files')
 
+// Allow local overrides
+import local_config from './local_config.mjs'
+Object.assign(config, local_config)
+
 export default config

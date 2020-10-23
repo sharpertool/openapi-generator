@@ -8,12 +8,10 @@
 
 let handlers = null
 
+// Calling a module from commonjs. Must use import()
 const execHandler = async (request, response, method) => {
   if (! handlers) {
-      console.log('Handlers not loaded yet. Loading')
       handlers = await import('./DefaultController.mjs')
-  } else {
-    console.log('Handlers already loaded...')
   }
   await handlers[method](request, response)
 }

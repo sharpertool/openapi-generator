@@ -88,6 +88,7 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
 
     apiTemplateFiles.put("controller_module.mustache", ".mjs");
     apiTemplateFiles.put("service_module.mustache", ".mjs");
+    apiTemplateFiles.put("service_stub_module.mustache", ".mjs");
     apiTemplateFiles.put("handlers_module.mustache", ".js");
 
     supportingFiles.add(new SupportingFile("openapi_module.mustache", "src/api", "openapi.yaml"));
@@ -108,8 +109,8 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
     supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "src/services", "Service.mjs"));
 
     // do not overwrite if the file is already present
-    writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package.json"));
-    writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README.md"));
+    writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package_gen.json"));
+    writeOptional(outputFolder, new SupportingFile("README.mustache", "", "README_gen.md"));
 
     cliOptions.add(new CliOption(SERVER_PORT,
             "TCP port to listen on."));
@@ -118,6 +119,10 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
   @Override
   public String apiPackage() {
     return "src/controllers";
+  }
+
+  public String servicePackage() {
+    return "src/services";
   }
 
   /**
@@ -168,30 +173,27 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
 
   @Override
   public String apiFilename(String templateName, String tag) {
-    String result = super.apiFilename(templateName, tag);
-
     LOGGER.info("apiFilename templateName is {} and tag is {} ", templateName, tag);
-    LOGGER.info("apiFilename result: {}", result);
+    String result = "";
 
-    if (templateName.equals("service.mustache") | templateName.equals("service_module.mustache")) {
-      String stringToMatch = File.separator + "controllers" + File.separator;
-      String replacement = File.separator + implFolder + File.separator;
-      result = result.replace(stringToMatch, replacement);
+    if (templateName.contains("service_stub")) {
+      String suffix = apiTemplateFiles().get(templateName);
+      result = apiFileFolderNode("services") + File.separator + "Service_stub" + suffix;
 
-      stringToMatch = "Controller.";
-      replacement = "Service.";
-      result = result.replace(stringToMatch, replacement);
-      LOGGER.info("apiFilename for service result: {} ", result);
-    } else if (templateName.equals("handlers.mustache") | templateName.equals("handlers_module.mustache")) {
-      //String stringToMatch = File.separator + "controllers" + File.separator;
-      //String replacement = File.separator + implFolder + File.separator;
-      //result = result.replace(stringToMatch, replacement);
+    } else if (templateName.contains("service")) {
+      String suffix = apiTemplateFiles().get(templateName);
+      result = apiFileFolderNode("services") + File.separator + "DefaultServices" + suffix;
 
-      String stringToMatch = "Controller.";
-      String replacement = "Handlers.";
-      result = result.replace(stringToMatch, replacement);
-      LOGGER.info("apiFilename for handlers result: {} ", result);
+    } else if (templateName.contains("handlers")) {
+      String suffix = apiTemplateFiles().get(templateName);
+      result = apiFileFolderNode("controllers") + File.separator + "DefaultHandlers" + suffix;
+
+    } else {
+      result = super.apiFilename(templateName, tag);
+
     }
+
+    LOGGER.info("apiFilename result: {}", result);
     return result;
   }
 
@@ -223,6 +225,12 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
   @Override
   public String apiFileFolder() {
     return outputFolder + File.separator + apiPackage().replace('.', File.separatorChar);
+  }
+
+  public String apiFileFolderNode(String theFolder) {
+    String packageName = apiPackage();
+    packageName = packageName.replace("controllers", theFolder);
+    return outputFolder + File.separator + packageName.replace('.', File.separatorChar);
   }
 
   public String getExportedName() {

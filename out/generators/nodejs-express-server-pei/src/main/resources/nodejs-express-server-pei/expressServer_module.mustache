@@ -56,8 +56,8 @@ class ExpressServer {
         apiSpec: this.openApiPath,
         validateRequests: true,
         validateResponses: false,
-        operationHandlers: join(resolve()),
-        fileUploader: {dest: this.uploadPath}
+        operationHandlers: join(__dirname),
+        //fileUploader: {dest: this.uploadPath}
       })
     )
   }

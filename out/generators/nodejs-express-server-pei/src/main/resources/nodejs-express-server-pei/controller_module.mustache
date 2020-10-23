@@ -7,12 +7,12 @@
  */
 
 import Controller from './Controller.mjs'
-import * as service from '../services/{{{classname}}}Service.mjs'
+import * as services from '../services/index.mjs'
 
 {{#operations}}
 {{#operation}}
 export const {{operationId}} = async (request, response) => {
-  await Controller.handleRequest(request, response, service.{{operationId}})
+  await Controller.handleRequest(request, response, services.{{operationId}})
 }
 
 {{/operation}}

@@ -4,8 +4,8 @@ import ExpressServer from './expressServer.mjs'
 
 // Import these for debug purposes.
 // Importing them here tests the import chain
-import controllers from './controllers/index.mjs'
-import services from './services/index.mjs'
+import * as controllers from './controllers/index.mjs'
+import * as services from './services/index.mjs'
 
 const launchServer = async () => {
   let expressServer = null

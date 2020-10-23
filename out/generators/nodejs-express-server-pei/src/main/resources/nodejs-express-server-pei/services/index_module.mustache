@@ -3,7 +3,7 @@
 {{#operations}}
 {{#operation}}
 {{#-first}}
-import * as {{classname}}Service from './{{classname}}Service.mjs'
+export * from './{{classname}}Services.mjs'
 {{/-first}}
 {{/operation}}
 {{/operations}}
@@ -15,7 +15,6 @@ import * as {{classname}}Service from './{{classname}}Service.mjs'
 {{#operations}}
 {{#operation}}
 {{#-first}}
-export default {{classname}}Service
 {{/-first}}
 {{/operation}}
 {{/operations}}

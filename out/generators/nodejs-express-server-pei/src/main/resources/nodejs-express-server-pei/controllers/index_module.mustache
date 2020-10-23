@@ -3,7 +3,7 @@
 {{#operations}}
 {{#operation}}
 {{#-first}}
-import * as {{classname}}Controller from './{{classname}}Controller.mjs'
+export * from './{{classname}}Controller.mjs'
 {{/-first}}
 {{/operation}}
 {{/operations}}
@@ -15,7 +15,6 @@ import * as {{classname}}Controller from './{{classname}}Controller.mjs'
 {{#operations}}
 {{#operation}}
   {{#-first}}
-export default {{classname}}Controller
   {{/-first}}
 {{/operation}}
 {{/operations}}
