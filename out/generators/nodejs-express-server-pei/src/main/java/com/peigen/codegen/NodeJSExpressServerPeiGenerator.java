@@ -86,27 +86,27 @@ public class NodeJSExpressServerPeiGenerator extends DefaultCodegen implements C
     // no model file
     modelTemplateFiles.clear();
 
-    apiTemplateFiles.put("controller_module.mustache", ".mjs");
-    apiTemplateFiles.put("service_module.mustache", ".mjs");
-    apiTemplateFiles.put("service_stub_module.mustache", ".mjs");
+    apiTemplateFiles.put("controller_module.mustache", ".js");
+    apiTemplateFiles.put("service_module.mustache", ".js");
+    apiTemplateFiles.put("service_stub_module.mustache", ".js");
     apiTemplateFiles.put("handlers_module.mustache", ".js");
 
     supportingFiles.add(new SupportingFile("openapi_module.mustache", "src/api", "openapi.yaml"));
-    supportingFiles.add(new SupportingFile("config_module.mustache", "src", "config.mjs"));
-    supportingFiles.add(new SupportingFile("expressServer_module.mustache", "src", "expressServer.mjs"));
-    supportingFiles.add(new SupportingFile("index_module.mustache", "src", "index.mjs"));
-    supportingFiles.add(new SupportingFile("logger_module.mustache", "src", "logger.mjs"));
+    supportingFiles.add(new SupportingFile("config_module.mustache", "src", "config.js"));
+    supportingFiles.add(new SupportingFile("expressServer_module.mustache", "src", "expressServer.js"));
+    supportingFiles.add(new SupportingFile("index_module.mustache", "src", "index.js"));
+    supportingFiles.add(new SupportingFile("logger_module.mustache", "src", "logger.js"));
     supportingFiles.add(new SupportingFile("eslintrc.mustache", "", ".eslintrc.json"));
 
     // utils folder
-    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "src/utils", "openapiRouter.mjs"));
+    supportingFiles.add(new SupportingFile("utils" + File.separator + "openapiRouter.mustache", "src/utils", "openapiRouter.js"));
 
     // controllers folder
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index_module.mustache", "src/controllers", "index.mjs"));
-    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller_module.mustache", "src/controllers", "Controller.mjs"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "index_module.mustache", "src/controllers", "index.js"));
+    supportingFiles.add(new SupportingFile("controllers" + File.separator + "Controller_module.mustache", "src/controllers", "Controller.js"));
     // service folder
-    supportingFiles.add(new SupportingFile("services" + File.separator + "index_module.mustache", "src/services", "index.mjs"));
-    supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "src/services", "Service.mjs"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "index_module.mustache", "src/services", "index.js"));
+    supportingFiles.add(new SupportingFile("services" + File.separator + "Service_module.mustache", "src/services", "Service.js"));
 
     // do not overwrite if the file is already present
     writeOptional(outputFolder, new SupportingFile("package.mustache", "", "package_gen.json"));

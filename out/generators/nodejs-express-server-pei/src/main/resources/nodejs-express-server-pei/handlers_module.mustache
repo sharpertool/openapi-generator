@@ -11,7 +11,7 @@ let handlers = null
 // Calling a module from commonjs. Must use import()
 const execHandler = async (request, response, method) => {
   if (! handlers) {
-      handlers = await import('./DefaultController.mjs')
+      handlers = await import('./DefaultController')
   }
   await handlers[method](request, response)
 }

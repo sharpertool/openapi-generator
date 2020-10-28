@@ -1,18 +1,7 @@
 /* eslint-disable no-unused-vars */
-import Service from './Service.mjs'
+import Service from './Service'
 
-// Service overrides
-let serverImplementations = null
-const execServiceImplementation = async (params, method) => {
-  if (! serverImplementations) {
-    serverImplementations = await import('./Services_implementation.mjs')
-  }
-  let result = {}
-  if (method in serverImplementations) {
-    result = await serverImplementations[method](...params)
-  }
-  return result
-}
+import * as peiapi from '../peigenesis/index'
 
 {{#operations}}
 {{#operation}}
@@ -43,12 +32,12 @@ export const {{{operationId}}} = ({{#allParams}}{{#-first}}{ {{/-first}}{{paramN
             {{paramName}},
         {{/allParams}}
       }
-      let response = await execServiceImplementation(params, "{{operationId}}")
+      let response = await peiapi.{{operationId}}(params)
       resolve(Service.successResponse(response.payload, response.code))
     } catch (e) {
       reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
+        e.error || e.message || e.payload || 'Invalid API Input',
+        e.code || e.status || 405,
       ))
     }
   },

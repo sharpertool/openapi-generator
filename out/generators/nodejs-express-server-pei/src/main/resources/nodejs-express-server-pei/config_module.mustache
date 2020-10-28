@@ -1,8 +1,4 @@
-import {fileURLToPath} from 'url'
-import {dirname, join, resolve} from 'path'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import {join} from 'path'
 
 const config = {
   ROOT_DIR: __dirname,
@@ -17,7 +13,7 @@ config.FULL_PATH = `${config.URL_PATH}:${config.URL_PORT}/${config.BASE_VERSION}
 config.FILE_UPLOAD_PATH = join(config.PROJECT_DIR, 'uploaded_files')
 
 // Allow local overrides
-import local_config from './local_config.mjs'
+import local_config from './local_config'
 Object.assign(config, local_config)
 
 export default config

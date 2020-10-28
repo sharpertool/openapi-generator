@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import Service from './Service.mjs'
+import Service from './Service'
 
-import * as peiapi from '../peigenesis/index.mjs'
+import * as peiapi from '../peigenesis/index'
 
 {{#operations}}
 {{#operation}}
@@ -23,16 +23,21 @@ import * as peiapi from '../peigenesis/index.mjs'
 * returns {{{returnType}}}
 {{/returnType}}
 * */
-export const {{{operationId}}} = (params) => new Promise(
+export const {{{operationId}}} = ({{#allParams}}{{#-first}}{ {{/-first}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{#-last}} }{{/-last}}{{/allParams}}) => new Promise(
   /* Should this be async??? */
   async (resolve, reject) => {
     try {
+      let params = {
+        {{#allParams}}
+        {{paramName}},
+        {{/allParams}}
+      }
       let response = await peiapi.{{operationId}}(params)
       resolve(response)
     } catch (e) {
       reject({
-        'payload': e.message || 'Invalid input',
-        'code': e.status || 500
+        payload: e.message || e.status || 'Invalid API Service Input',
+        code: e.status || e.code || 405
       })
     }
   },
