@@ -1,22 +1,37 @@
 import winston from 'winston'
-const { transports, createLogger, format } = winston
+import config from './config'
 
-const logger = createLogger({
-  level: 'info',
+const {transports, createLogger, format} = winston
+
+const logConfig = {
+  level: config.LOG_LEVEL,
   format: format.combine(
     format.timestamp(),
     format.json(),
   ),
-  defaultMeta: { service: 'user-service' },
+  defaultMeta: {service: 'user-service'},
   transports: [
     new transports.Console(),
-    new transports.File({ filename: 'error.log', level: 'error', timestamp: true }),
-    new transports.File({ filename: 'combined.log', timestamp: true }),
   ],
-})
+}
+
+if (config.LOG_FILE) {
+  logConfig.transports.push(new transports.File({
+    filename: config.LOG_FILE,
+    level: config.LOG_FILE_LEVEL,
+    timestamps: true,
+  }))
+}
+
+const logger = createLogger(logConfig)
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({ format: format.simple() }))
+  logger.add(new transports.Console({format: format.simple()}))
 }
 
 export default logger
+
+export const log_info = (msg) => {
+  logger.log({level: 'info', message: msg})
+}
+

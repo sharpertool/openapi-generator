@@ -1,12 +1,19 @@
 import {join} from 'path'
 
+const version = require('../package.json').version
+
 const config = {
+  VERSION: version,
   ROOT_DIR: __dirname,
-  URL_PORT: 3000,
-  URL_PATH: 'http://localhost',
+  URL_PORT: process.env.URL_PORT || 3000,
+  URL_PATH: process.env.URL_PATH || 'http://localhost',
   BASE_VERSION: 'v2',
   CONTROLLER_DIRECTORY: join(__dirname, 'controllers'),
   PROJECT_DIR: __dirname,
+  BACKEND_TIMEOUT: process.env.BACKEND_TIMEOUT || 20000,
+  LOG_LEVEL: process.env.LOG_LEVEL || 'info',
+  LOG_FILE: process.env.LOG_FILE || '',
+  LOG_FILE_LEVEL: process.env.LOG_FILE_LEVEL || 'error'
 }
 config.OPENAPI_YAML = join(config.ROOT_DIR, 'api', 'openapi.yaml')
 config.FULL_PATH = `${config.URL_PATH}:${config.URL_PORT}/${config.BASE_VERSION}`
@@ -15,5 +22,7 @@ config.FILE_UPLOAD_PATH = join(config.PROJECT_DIR, 'uploaded_files')
 // Allow local overrides
 import local_config from './local_config'
 Object.assign(config, local_config)
+
+console.log(`Base URL for backend is ${config.BASE_URL}`)
 
 export default config

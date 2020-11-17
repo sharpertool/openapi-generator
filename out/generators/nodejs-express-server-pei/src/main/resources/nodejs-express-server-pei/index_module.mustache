@@ -7,6 +7,8 @@ import ExpressServer from './expressServer'
 import * as controllers from './controllers/index'
 import * as services from './services/index'
 
+logger.info(`Starting PEI API Server, version ${config.VERSION}`)
+
 const launchServer = async () => {
   let expressServer = null
   try {
